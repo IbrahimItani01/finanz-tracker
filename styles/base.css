@@ -30,3 +30,10 @@ a{
     text-decoration: none;
     color: black;
 }
+@media screen and (min-width:557px) {
+    .login-container{
+        width: 80%;
+        max-width: 570px;
+        scale: 0.7;
+    }
+}

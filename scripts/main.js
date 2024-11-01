@@ -8,7 +8,6 @@ submitButton?.addEventListener("click",()=>{
     if(userNameInput.value === ""){
         userNameContainer.innerHTML+= `
         <p>Note! You must enter a username</p>
-        submitButton
         `
         setTimeout(()=>{
             window.location.reload()   
