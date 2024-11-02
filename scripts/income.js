@@ -1,4 +1,5 @@
 const incomeDiv = document.getElementById("income-div");
+const editHint = document.getElementById("edit-hint");
 let editMode = false;
 let editKey = null;
 const renderIncomeData = () => {
@@ -62,6 +63,7 @@ editButtons.forEach((button)=>{
         incomeAmount.value = income.amount;
         incomeNote.value = income.note;
         editMode = true;
+        editHint.classList.toggle("hidden");
       });
 })
 incomeForm.addEventListener("submit", (e) => {
@@ -70,7 +72,6 @@ incomeForm.addEventListener("submit", (e) => {
     if (editMode === false) {
     addIncome(amount, note);
     } else {
-        // Edit existing income without using the spread operator
         userDataObject.income = userDataObject.income.map((income) => {
           if (income.id === editKey) {
             return {
@@ -83,16 +84,15 @@ incomeForm.addEventListener("submit", (e) => {
           return income;
         });
     
-        // Update the displayed income card
         const incomeCard = document.querySelector(`.income-card[key="${editKey}"]`);
         if (incomeCard) {
           incomeCard.querySelector(".amount").innerText = `$${amount}`;
           incomeCard.querySelector(".note").innerText = note;
         }
     
-        // Reset edit mode
         editMode = false;
         editKey = null;
+        editHint.classList.toggle("hidden");
       }
       saveToLocalStorage();
       
