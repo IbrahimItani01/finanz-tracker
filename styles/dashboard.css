@@ -1,3 +1,6 @@
+.main-section>h1{
+    text-align: center;
+}
 .dashboard-layout{
     display: flex;
     height: 100vh;
@@ -47,10 +50,14 @@
     height: 10%;
 }
 .data-section{
-    background-color: green;
+    box-shadow: 0 0 8px 0;
+    padding:2em 0;
     height: 90%;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: space-around;
+    border-radius: 10px;
 }
 .data-section>*{
     width: fit-content;
@@ -59,9 +66,10 @@
 }
 .features-card{
     background-color: gold;
-    padding: 1em;
+    padding: 1em 2em;
     width: fit-content;
-    align-self: flex-end;
+    height: fit-content;
+    min-width: 478px;
 }
 .features-card>ul{
     display: flex;
@@ -70,7 +78,31 @@
     padding-left: 20px;
     margin-top: 10px;
 }
-.budget-container{
+.data-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3em;
+    width: 100%;
+}
+
+.double-side-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    height: fit-content;
+    padding-inline: 2em;
+    max-width: 1218px;
+    margin-inline: auto;
+}
+.double-side-card{
     background-color: gold;
-    padding: 2em;
+    padding: 3em 1em;
+    border-radius: 10px;
+    width:33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    min-width: 280px;
 }

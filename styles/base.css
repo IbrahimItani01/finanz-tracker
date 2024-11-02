@@ -37,6 +37,11 @@ a{
 em{
     font-size: 15px;
 }
+@media screen and (max-width:998px) {
+    .double-side-container{
+        width: 280px;
+    }
+}
 @media screen and (min-width:557px) {
     .login-container{
         width: 80%;
