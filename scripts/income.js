@@ -1,26 +1,25 @@
-const incomeDiv = document.getElementById("income-div");
+const entryDiv = document.getElementById("entry-div");
 const editHint = document.getElementById("edit-hint");
 const sortCriteriaDropdown = document.getElementById("sortCriteria");
 
 let editMode = false;
 let editKey = null;
 
-const renderIncomeData = () => {
-  // Clear only the income cards, not the sorting container
-  incomeDiv.innerHTML = "";
+const renderEntryData = () => {
+  entryDiv.innerHTML = "";
 
-  userDataObject.income.forEach((incomeData) => {
-    incomeDiv.innerHTML += `
-      <div class="income-card" key=${incomeData.id}>
+  userDataObject.income.forEach((entryData) => {
+    entryDiv.innerHTML += `
+      <div class="entry-card" key=${entryData.id}>
         <div class="information">
-          <h2 class="amount">$${incomeData.amount}</h2>
-          <p class="note">${incomeData.note}</p>
+          <h2 class="amount">$${entryData.amount}</h2>
+          <p class="note">${entryData.note}</p>
         </div>
         <div class="actions-container">
-          <div class="actions edit" key="edit-${incomeData.id}">
+          <div class="actions edit" key="edit-${entryData.id}">
             <img src="/assets/edit-icon.svg" alt="edit-icon">
           </div>
-          <div class="actions delete" key="delete-${incomeData.id}">
+          <div class="actions delete" key="delete-${entryData.id}">
             <img src="/assets/delete-icon.svg" alt="delete-icon">
           </div>
         </div>
@@ -38,7 +37,7 @@ const attachEventListeners = () => {
 
   deleteButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const incomeCard = this.closest(".income-card");
+      const incomeCard = this.closest(".entry-card");
       const keyToDelete = incomeCard.getAttribute("key");
       incomeCard.remove();
       userDataObject.income = userDataObject.income.filter(
@@ -50,37 +49,37 @@ const attachEventListeners = () => {
 
   editButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const incomeCard = this.closest(".income-card");
+      const incomeCard = this.closest(".entry-card");
       const keyToEdit = incomeCard.getAttribute("key");
       const income = userDataObject.income.find((item) => item.id === keyToEdit);
       editKey = income.id;
-      incomeAmount.value = income.amount;
-      incomeNote.value = income.note;
+      entryAmount.value = income.amount;
+      entryNote.value = income.note;
       editMode = true;
       editHint.classList.toggle("hidden");
     });
   });
 };
 
-const incomeForm = document.getElementById("income-form");
-const incomeAmount = document.getElementById("income-amount");
-const incomeNote = document.getElementById("income-note");
+const entryForm = document.getElementById("entry-form");
+const entryAmount = document.getElementById("entry-amount");
+const entryNote = document.getElementById("entry-note");
 
 const addIncome = (amount, note) => {
-  const incomeData = {
+  const entryData = {
     id: Date.now().toString(),
     amount: amount,
     note: note,
     date: new Date().toISOString(),
   };
-  userDataObject.income.push(incomeData);
+  userDataObject.income.push(entryData);
   saveToLocalStorage();
-  renderIncomeData();  // Re-render after adding
+  renderEntryData();  // Re-render after adding
 };
 
-incomeForm.addEventListener("submit", (e) => {
-  const amount = incomeAmount.value;
-  const note = incomeNote.value;
+entryForm.addEventListener("submit", (e) => {
+  const amount = entryAmount.value;
+  const note = entryNote.value;
 
   if (editMode === false) {
     addIncome(amount, note);
@@ -100,7 +99,7 @@ incomeForm.addEventListener("submit", (e) => {
     editMode = false;
     editKey = null;
     editHint.classList.toggle("hidden");
-    renderIncomeData();  // Re-render after editing
+    renderEntryData();  // Re-render after editing
   }
   saveToLocalStorage();
 });
@@ -118,12 +117,12 @@ const applySort = () => {
     }
   });
 
-  renderIncomeData();  // Re-render after sorting
+  renderEntryData();  // Re-render after sorting
 };
 
 // Attach event listener to sort criteria dropdown
 sortCriteriaDropdown.addEventListener("change", applySort);
 
 // Initial render
-renderIncomeData();
+renderEntryData();
 console.log(userDataObject)

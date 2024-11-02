@@ -1,6 +1,6 @@
-.income-section{
+.entry-section {
     box-shadow: 0 0 8px 0;
-    padding:2em 0;
+    padding: 2em 0;
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -8,7 +8,7 @@
     gap: 1em;
     border-radius: 10px;
 }
-.income-section>form{
+.entry-section > form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -18,54 +18,53 @@
     padding: 1em;
     border-radius: 10px;
     box-shadow: 0 0 8px 0;
-
 }
-.income-section>form>label{
+.entry-section > form > label {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.income-section>form>label>input{
+.entry-section > form > label > input {
     padding: 10px;
     border-radius: 10px;
-    border: 2px solid ;
+    border: 2px solid;
 }
-.income-section>form>button{
+.entry-section > form > button {
     width: 100%;
     padding: 1em 2em;
     border-radius: 10px;
-    box-shadow:  0 0 5px 1px ;
+    box-shadow: 0 0 5px 1px;
     background-color: gold;
     font-weight: bold;
     transition: all 0.4s ease;
 }
-.income-section>form>button:hover{
-    box-shadow:  0 0 10px 1px ;
+.entry-section > form > button:hover {
+    box-shadow: 0 0 10px 1px;
 }
-.income-display{
+.entry-display {
     background-color: #ffd900af;
     height: 100%;
     width: 50%;
     border-radius: 10px;
     overflow-y: scroll;
-    min-width:580px;
+    min-width: 580px;
     padding: 8px;
     display: flex;
     flex-direction: column;
     gap: 1em;
 }
-.income-card{
+.entry-card {
     background-color: white;
     border-radius: 10px;
     padding: 10px;
     display: flex;
     justify-content: space-between;
 }
-.actions-container{
+.actions-container {
     display: flex;
     gap: 1em;
 }
-.actions{
+.actions {
     width: 40px;
     cursor: pointer;
 }
@@ -78,26 +77,25 @@
     padding: 1em;
     border-radius: 10px;
 }
-.edit-hint>em{
+.edit-hint > em {
     text-align: center;
     display: block;
 }
-.sort-container{
+.sort-container {
     display: flex;
     gap: 1em;
     align-items: center;
 }
-.sort-container>select{
+.sort-container > select {
     padding: 5px;
     border-radius: 5px;
 }
-.sort-container>button{
+.sort-container > button {
     background-color: white;
     padding: 2px;
-    box-shadow:  0 0 5px 1px ;
-    
+    box-shadow: 0 0 5px 1px;
 }
-.income-section>div{
+.entry-section > div {
     display: flex;
     flex-direction: column;
 }

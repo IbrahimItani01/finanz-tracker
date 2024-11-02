@@ -11,7 +11,7 @@ const renderExpenseData = () => {
 
   userDataObject.expenses.forEach((incomeData) => {
     expenseDiv.innerHTML += `
-      <div class="income-card" key=${incomeData.id}>
+      <div class="entry-card" key=${incomeData.id}>
         <div class="information">
           <h2 class="amount">$${incomeData.amount}</h2>
           <p class="note">${incomeData.note}</p>
@@ -38,7 +38,7 @@ const attachEventListeners = () => {
 
   deleteButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const incomeCard = this.closest(".income-card");
+      const incomeCard = this.closest(".entry-card");
       const keyToDelete = incomeCard.getAttribute("key");
       incomeCard.remove();
       userDataObject.expenses = userDataObject.expenses.filter(
@@ -50,7 +50,7 @@ const attachEventListeners = () => {
 
   editButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const incomeCard = this.closest(".income-card");
+      const incomeCard = this.closest(".entry-card");
       const keyToEdit = incomeCard.getAttribute("key");
       const income = userDataObject.expenses.find((item) => item.id === keyToEdit);
       editKey = income.id;
