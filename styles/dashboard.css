@@ -1,6 +1,5 @@
 .dashboard-layout{
     display: flex;
-    gap: 1em;
     height: 100vh;
 }
 .side-bar{
@@ -11,6 +10,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1em 0;
+    box-shadow: 0 0 5px;
 }
 .side-bar>nav{
     display: flex;
@@ -39,4 +39,8 @@
 .current-page{
     background-color: black;
     color: gold;
+}
+.main-section{
+    width: 100%;
+    padding: 10px;
 }
