@@ -42,3 +42,7 @@ submitButton?.addEventListener("click", () => {
     window.location.href = "http://127.0.0.1:5500/pages/dashboard.html";
   }
 });
+
+const userNameDisplay = document.getElementById("username-display");
+let userDataObject = JSON.parse(localStorage.getItem("userData"));
+userNameDisplay.innerText = userDataObject.username;
