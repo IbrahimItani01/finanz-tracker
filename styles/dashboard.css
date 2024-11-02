@@ -56,3 +56,10 @@
     gap: 1em;
     min-width: 280px;
 }
+.out-budget{
+    background-color: red;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 1em;
+    border-radius: 10px;
+}

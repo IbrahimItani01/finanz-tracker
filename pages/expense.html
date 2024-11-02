@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
    
     <link rel="stylesheet" href="/styles/base.css" />
-    <link rel="stylesheet" href="/styles/expense.css" />
+    <link rel="stylesheet" href="/styles/income.css" />
     <title>Finanz | Expenses</title>
   </head>
   <body>
@@ -15,6 +15,9 @@
             <div class="side-logo">
                 <img src="/assets/logo.png" alt="logo">
             </div>
+            <div class="out-budget hidden">
+              <h3>Out of Budget!!</h3>
+          </div>
             <nav>
                 <a href="/pages/dashboard.html" >Overview</a>
                 <a href="/pages/income.html">Income</a>
@@ -24,12 +27,37 @@
             <em> &copy Finanz | Ibrahim Itani</em>
         </div>
         <div class="main-section">
-          <h1>Hi,  <span id="username-display"></span>!</h1>
-          <div class="data-section">
+          <h1>Hi, <span id="username-display"></span>!</h1>
+          <div class="income-section">
+            <form id="income-form">
+              <div class="edit-hint hidden" id="edit-hint">
+                <em>Edit Data Here</em>
+              </div>
+              <label>
+                Amount (in $):
+                <input type="number" id="income-amount" required />
+              </label>
+              <label>
+                Note:
+                <input type="text" id="income-note" required />
+              </label>
+              <button type="submit">Add/Edit Expense</button>
+            </form>
+            <div>
+              <div class="sort-container">
+                <label for="sortCriteria">Sort by:</label>
+                <select id="sortCriteria">
+                  <option value="amount">Amount (low to high)</option>
+                  <option value="note">Note (Alphabetically)</option>
+                  <option value="date">Date (Newest First)</option>
+                </select>
+              </div>
+              <div class="income-display" id="expense-div"></div>
+            </div>
           </div>
-      </div>
+        </div>
     </div>
     <script src="/scripts/main.js"></script>
-    <script src="/scripts/dashboard.js"></script>
+    <script src="/scripts/expense.js"></script>
   </body>
 </html>

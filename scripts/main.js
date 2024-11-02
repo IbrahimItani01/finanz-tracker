@@ -48,5 +48,5 @@ let userDataObject = JSON.parse(localStorage.getItem("userData"));
 userNameDisplay.innerText = userDataObject.username;
 const saveToLocalStorage = () => {
   localStorage.setItem('userData', JSON.stringify(userDataObject));
-  window.location.reload
+  window.location.reload;
 };

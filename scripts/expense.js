@@ -1,16 +1,16 @@
-const incomeDiv = document.getElementById("income-div");
+const expenseDiv = document.getElementById("expense-div");
 const editHint = document.getElementById("edit-hint");
 const sortCriteriaDropdown = document.getElementById("sortCriteria");
 
 let editMode = false;
 let editKey = null;
 
-const renderIncomeData = () => {
+const renderExpenseData = () => {
   // Clear only the income cards, not the sorting container
-  incomeDiv.innerHTML = "";
+  expenseDiv.innerHTML = "";
 
-  userDataObject.income.forEach((incomeData) => {
-    incomeDiv.innerHTML += `
+  userDataObject.expenses.forEach((incomeData) => {
+    expenseDiv.innerHTML += `
       <div class="income-card" key=${incomeData.id}>
         <div class="information">
           <h2 class="amount">$${incomeData.amount}</h2>
@@ -41,7 +41,7 @@ const attachEventListeners = () => {
       const incomeCard = this.closest(".income-card");
       const keyToDelete = incomeCard.getAttribute("key");
       incomeCard.remove();
-      userDataObject.income = userDataObject.income.filter(
+      userDataObject.expenses = userDataObject.expenses.filter(
         (income) => income.id !== keyToDelete
       );
       saveToLocalStorage();
@@ -52,7 +52,7 @@ const attachEventListeners = () => {
     button.addEventListener("click", function () {
       const incomeCard = this.closest(".income-card");
       const keyToEdit = incomeCard.getAttribute("key");
-      const income = userDataObject.income.find((item) => item.id === keyToEdit);
+      const income = userDataObject.expenses.find((item) => item.id === keyToEdit);
       editKey = income.id;
       incomeAmount.value = income.amount;
       incomeNote.value = income.note;
@@ -67,15 +67,15 @@ const incomeAmount = document.getElementById("income-amount");
 const incomeNote = document.getElementById("income-note");
 
 const addIncome = (amount, note) => {
-  const incomeData = {
+  const expenseData = {
     id: Date.now().toString(),
     amount: amount,
     note: note,
     date: new Date().toISOString(),
   };
-  userDataObject.income.push(incomeData);
+  userDataObject.expenses.push(expenseData);
   saveToLocalStorage();
-  renderIncomeData();  // Re-render after adding
+  renderExpenseData();  // Re-render after adding
 };
 
 incomeForm.addEventListener("submit", (e) => {
@@ -85,22 +85,22 @@ incomeForm.addEventListener("submit", (e) => {
   if (editMode === false) {
     addIncome(amount, note);
   } else {
-    userDataObject.income = userDataObject.income.map((income) => {
-      if (income.id === editKey) {
+    userDataObject.expenses = userDataObject.expenses.map((expense) => {
+      if (expense.id === editKey) {
         return {
-          id: income.id,
+          id: expense.id,
           amount: amount,
           note: note,
-          date: income.date,
+          date: expense.date,
         };
       }
-      return income;
+      return expense;
     });
 
     editMode = false;
     editKey = null;
     editHint.classList.toggle("hidden");
-    renderIncomeData();  // Re-render after editing
+    renderExpenseData();  // Re-render after editing
   }
   saveToLocalStorage();
 });
@@ -108,7 +108,7 @@ incomeForm.addEventListener("submit", (e) => {
 const applySort = () => {
   const criteria = sortCriteriaDropdown.value;
 
-  userDataObject.income.sort((a, b) => {
+  userDataObject.expenses.sort((a, b) => {
     if (criteria === "amount") {
       return parseFloat(a.amount) - parseFloat(b.amount);
     } else if (criteria === "note") {
@@ -118,12 +118,11 @@ const applySort = () => {
     }
   });
 
-  renderIncomeData();  // Re-render after sorting
+  renderExpenseData();  // Re-render after sorting
 };
 
 // Attach event listener to sort criteria dropdown
 sortCriteriaDropdown.addEventListener("change", applySort);
 
-// Initial render
-renderIncomeData();
 console.log(userDataObject)
+renderExpenseData();  // Re-render after sorting
