@@ -1,2 +1,1 @@
-window.onload = window.localStorage.removeItem("userName");
-window.onload = window.localStorage.removeItem("budget");
+window.onload = window.localStorage.removeItem("userData");
