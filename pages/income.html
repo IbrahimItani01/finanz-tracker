@@ -40,15 +40,16 @@
               </label>
               <button type="submit">Add/Edit Income</button>
             </form>
-            <div class="income-display" id="income-div">
+            <div>
               <div class="sort-container">
                 <label for="sortCriteria">Sort by:</label>
                 <select id="sortCriteria">
-                  <option value="amount">Amount</option>
+                  <option value="amount">Amount (low to high)</option>
                   <option value="note">Note (Alphabetically)</option>
                   <option value="date">Date (Newest First)</option>
                 </select>
-                <button onclick="applySort()">Apply Sort</button>
+              </div>
+              <div class="income-display" id="income-div">
               </div>
             </div>
           </div>

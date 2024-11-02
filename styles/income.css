@@ -87,12 +87,17 @@
     gap: 1em;
     align-items: center;
 }
-.sort-container>select,.sort-container>button{
+.sort-container>select{
     padding: 5px;
     border-radius: 5px;
 }
 .sort-container>button{
     background-color: white;
+    padding: 2px;
     box-shadow:  0 0 5px 1px ;
     
+}
+.income-section>div{
+    display: flex;
+    flex-direction: column;
 }
