@@ -44,8 +44,7 @@ submitButton?.addEventListener("click", () => {
 });
 
 const userNameDisplay = document.getElementById("username-display");
-let userDataObject = JSON.parse(localStorage.getItem("userData"));
-userNameDisplay.innerText = userDataObject.username;
+let userDataObject = JSON.parse(localStorage.getItem("userData"));userNameDisplay.innerText = userDataObject.username;
 const saveToLocalStorage = () => {
   localStorage.setItem('userData', JSON.stringify(userDataObject));
   window.location.reload;

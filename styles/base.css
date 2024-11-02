@@ -90,6 +90,12 @@ em{
 .hidden{
     display: none;
 }
+.reset{
+    padding: 1em 2em;
+    border-radius: 7px;
+    background-color: red;
+    font-weight: bold;
+}
 @media screen and (min-width:557px) {
     .login-container{
         width: 80%;
