@@ -1,0 +1,42 @@
+.dashboard-layout{
+    display: flex;
+    gap: 1em;
+    height: 100vh;
+}
+.side-bar{
+    display: flex;
+    flex-direction: column; 
+    width: 10%;
+    background-color: rgba(255, 217, 0, 0.685);
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 0;
+}
+.side-bar>nav{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-around;
+    align-items: center;
+}
+.side-bar>nav>a{
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+.side-bar>nav>a:hover{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: gold;
+}
+.side-bar>em{
+    font-size: 10px;
+}
+.side-logo{
+    width: 50px;
+}
+.current-page{
+    background-color: black;
+    color: gold;
+}
