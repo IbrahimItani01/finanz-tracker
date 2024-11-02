@@ -82,3 +82,17 @@
     text-align: center;
     display: block;
 }
+.sort-container{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+.sort-container>select,.sort-container>button{
+    padding: 5px;
+    border-radius: 5px;
+}
+.sort-container>button{
+    background-color: white;
+    box-shadow:  0 0 5px 1px ;
+    
+}
