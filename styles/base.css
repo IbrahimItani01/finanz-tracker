@@ -37,6 +37,9 @@ a{
 em{
     font-size: 15px;
 }
+.hidden{
+    display: none;
+}
 .dashboard-layout{
     display: flex;
     height: 100vh;
@@ -77,14 +80,13 @@ em{
 }
 .current-page{
     background-color: black;
-    color: gold;
+    color: #ffd700;
 }
 .main-section{
     width: 100%;
     padding: 10px;
 }
 .main-section>h1{
-    height: 10%;
     text-align: center;
 }
 .hidden{
@@ -96,6 +98,51 @@ em{
     background-color: red;
     font-weight: bold;
 }
+.top-section{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+.mobile-bar{
+    position: relative;
+    display: none;
+}
+.burger-logo{
+    width: 50px;
+    cursor: pointer;
+}
+.mobile{
+    position: absolute;
+    right: 0;
+    background-color: #ffd900af;
+    align-items: center;
+    
+    padding: 1em;
+    box-shadow: 0 0 5px;
+   
+}
+.mobile>nav{
+    gap: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mobile>.reset{
+    width: 100%;
+}
+.mobile>nav>a{
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+.mobile>nav>a:hover{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: gold;
+}
+
 @media screen and (min-width:557px) {
     .login-container{
         width: 80%;
@@ -103,11 +150,40 @@ em{
         scale: 0.7;
     }
 }
+/* @media screen and (max-width:607px) {
+   .entry-display{
+    width: fit-content;
+    min-width: 0;
+   }
+} */
 @media screen and (max-width:998px) {
-    .double-side-container{
-        width: 280px;
+    .data-section{
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
     }
-    .income-display{
-        height: 200px;
+    .main-section>h1{
+        height: 10%;
+        text-align: start;
+        width: fit-content;
+    }
+   .double-side-container{
+        justify-content: center;
+        gap: 1em;
+    }
+    .features-card{
+        min-width: 0;
+        width: fit-content;
+    }
+    .entry-display{
+        height: 250px;
+       
+    }
+    .side-bar{
+        display: none;
+    }
+    .mobile-bar{
+        display: block;
     }
 }

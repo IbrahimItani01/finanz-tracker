@@ -30,7 +30,7 @@
 }
 .data-container{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 3em;
     width: 100%;
 }
