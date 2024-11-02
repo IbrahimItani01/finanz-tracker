@@ -24,11 +24,18 @@ label{
     font-size: 20px;
 }
 h1{
-    font-size: 34px;
+    font-size: 50px;
+}
+p,h2,ul{
+    font-size: 30px;
 }
 a{
     text-decoration: none;
     color: black;
+    font-size: 21px;
+}
+em{
+    font-size: 15px;
 }
 @media screen and (min-width:557px) {
     .login-container{
