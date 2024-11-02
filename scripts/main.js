@@ -1,6 +1,11 @@
 const submitButton = document.getElementById("submit-button");
 const userNameContainer = document.getElementById("username-container");
-
+let userData ={
+    username: "",
+    budget:0,
+    expenses:[],
+    income:[],
+}
 submitButton?.addEventListener("click", () => {
     const userNameInput = document.getElementById("username");
     const budgetInput = document.getElementById("budget");
@@ -31,8 +36,9 @@ submitButton?.addEventListener("click", () => {
     }, 700);
   }
     else {
-    localStorage.setItem("userName", userNameInput.value);
-    localStorage.setItem("budget", budgetInput.value);
+        userData.username = userNameInput.value;
+        userData.budget = budgetNumber;
+    localStorage.setItem("userData", JSON.stringify(userData));
     window.location.href = "http://127.0.0.1:5500/pages/dashboard.html";
   }
 });
