@@ -86,10 +86,7 @@ expenseForm.addEventListener("submit", (e) => {
     userDataObject.expenses = userDataObject.expenses.map((expense) => {
       if (expense.id === editKey) {
         return {
-          id: expense.id,
-          amount: amount,
-          note: note,
-          date: expense.date,
+         ...expense,amount:amount,note:note
         };
       }
       return expense;
