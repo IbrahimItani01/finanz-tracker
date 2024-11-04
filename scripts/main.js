@@ -3,7 +3,7 @@ const userNameContainer = document.getElementById("username-container");
 const burgerMenu = document.getElementById("mobile-menu");
 const burgerContent = document.getElementById("mobile-content");
 
-burgerMenu.addEventListener("click",()=>{
+burgerMenu?.addEventListener("click",()=>{
   burgerContent.classList.toggle("hidden");
   console.log("hi")
 })
