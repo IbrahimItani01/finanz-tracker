@@ -11,9 +11,11 @@ $query = $connection->prepare("INSERT INTO users (name, budget) VALUES (?, ?)");
 $query->bind_param("ss", $userName, $budget);
 
 if($query->execute() === TRUE) {    
+    $userId = $connection->insert_id;
     $response = [
         "status"=> "success",
-        "message"=> "user: added $userName to DB"
+        "message"=> "user: added $userName to DB",
+        "userId"=> $userId,
     ];
     echo json_encode( $response );
 }else{
