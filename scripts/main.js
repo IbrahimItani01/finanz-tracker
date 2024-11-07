@@ -5,7 +5,6 @@ const burgerContent = document.getElementById("mobile-content");
 
 burgerMenu?.addEventListener("click",()=>{
   burgerContent.classList.toggle("hidden");
-  console.log("hi")
 })
 let userData ={
     username: "",
@@ -51,7 +50,8 @@ submitButton?.addEventListener("click", () => {
 });
 
 const userNameDisplay = document.getElementById("username-display");
-let userDataObject = JSON.parse(localStorage.getItem("userData"));userNameDisplay.innerText = userDataObject.username;
+let userDataObject = JSON.parse(localStorage.getItem("userData"));
+userNameDisplay.innerText = userDataObject.username;
 const saveToLocalStorage = () => {
   localStorage.setItem('userData', JSON.stringify(userDataObject));
   window.location.reload;
