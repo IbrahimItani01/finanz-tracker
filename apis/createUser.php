@@ -8,7 +8,7 @@
  $budget = $_POST["budget"];
 
 $query = $connection->prepare("INSERT INTO users (name, budget) VALUES (?, ?)");
-$query->bind_param("ss", $userName, $budget);
+$query->bind_param("si", $userName, $budget);
 
 if($query->execute() === TRUE) {    
     $userId = $connection->insert_id;

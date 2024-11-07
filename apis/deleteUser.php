@@ -3,7 +3,7 @@ include "connection.php";
 $id = $_POST["id"];
 
 $query = $connection->prepare("DELETE FROM users WHERE id=?");
-$query->bind_param("s", $id);
+$query->bind_param("i", $id);
 if($query->execute()){
     $response = [
         "status"=> "success",
