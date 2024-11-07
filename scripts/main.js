@@ -3,56 +3,55 @@ const userNameContainer = document.getElementById("username-container");
 const burgerMenu = document.getElementById("mobile-menu");
 const burgerContent = document.getElementById("mobile-content");
 
-burgerMenu?.addEventListener("click",()=>{
+burgerMenu?.addEventListener("click", () => {
   burgerContent.classList.toggle("hidden");
-})
-let userData ={
-    username: "",
-    budget:0,
-    expenses:[],
-    income:[],
-}
+});
 submitButton?.addEventListener("click", () => {
-    const userNameInput = document.getElementById("username");
-    const budgetInput = document.getElementById("budget");
-    let budgetNumber = parseInt(budgetInput.value)
-    if (userNameInput.value === "" && isNaN(budgetNumber)) {
+  const userNameInput = document.getElementById("username");
+  const budgetInput = document.getElementById("budget");
+  let budgetNumber = parseInt(budgetInput.value);
+  if (userNameInput.value === "" && isNaN(budgetNumber)) {
     userNameContainer.innerHTML += `
         <p>Note! You must enter a username and budget</p>
         `;
     setTimeout(() => {
       window.location.reload();
     }, 700);
-  } 
-  else if (userNameInput.value === ""  && !isNaN(budgetNumber)) {
+  } else if (userNameInput.value === "" && !isNaN(budgetNumber)) {
     userNameContainer.innerHTML += `
         <p>Note! You must enter a username</p>
         `;
     setTimeout(() => {
       window.location.reload();
     }, 700);
-  }
-  else if (isNaN(budgetNumber)  && userNameInput.value !== " ") {
-
+  } else if (isNaN(budgetNumber) && userNameInput.value !== " ") {
     userNameContainer.innerHTML += `
         <p>Note! You must enter a budget</p>
         `;
     setTimeout(() => {
       window.location.reload();
     }, 700);
-  }
-    else {
-        userData.username = userNameInput.value;
-        userData.budget = budgetNumber;
-        localStorage.setItem("userData", JSON.stringify(userData));
+  } else {
+    axios
+      .post(
+        "http://localhost/finanz-tracker-enhanced/apis/createUser.php",
+        {
+          name: userNameInput.value,
+          budget: budgetNumber,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.message);
+        localStorage.setItem("currentUser", response.data.userId);
         window.location.href = "http://127.0.0.1:5500/pages/dashboard.html";
+      })
+      .catch((err) => console.log(err));
   }
 });
 
-const userNameDisplay = document.getElementById("username-display");
-let userDataObject = JSON.parse(localStorage.getItem("userData"));
-userNameDisplay.innerText = userDataObject.username;
-const saveToLocalStorage = () => {
-  localStorage.setItem('userData', JSON.stringify(userDataObject));
-  window.location.reload;
-};
+
