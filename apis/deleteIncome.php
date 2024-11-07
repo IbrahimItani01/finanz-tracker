@@ -1,5 +1,5 @@
 <?php
-include "connection";
+include "connection.php";
 
 $id =$_POST["id"];
 
