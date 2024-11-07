@@ -1,7 +1,8 @@
 <?php
 include "connection.php";
+$data = json_decode(file_get_contents("php://input"), true);
 
-$id =$_POST["id"];
+$id =$data["id"];
 
 $query = $connection->prepare("DELETE FROM expenses WHERE id=?");
 $query->bind_param("i", $id);

@@ -1,11 +1,11 @@
-<!-- The query to include -->
-<!-- INSERT INTO users (name,budget) VALUES ("ibrahim",1000) -->
  <?php
 
- include "connection.php";
 
- $userName = $_POST["name"];
- $budget = $_POST["budget"];
+ include "connection.php";
+ $data = json_decode(file_get_contents("php://input"), true);
+
+ $userName = $data["name"];
+ $budget = $data["budget"];
 
 $query = $connection->prepare("INSERT INTO users (name, budget) VALUES (?, ?)");
 $query->bind_param("si", $userName, $budget);
@@ -21,3 +21,4 @@ if($query->execute() === TRUE) {
 }else{
     echo "Failed adding user";
 }
+exit; // Ensures no other output is sent

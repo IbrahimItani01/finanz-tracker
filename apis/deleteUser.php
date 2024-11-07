@@ -1,6 +1,8 @@
 <?php
 include "connection.php";
-$id = $_POST["id"];
+$data = json_decode(file_get_contents("php://input"), true);
+
+$id = $data["id"];
 
 $query = $connection->prepare("DELETE FROM users WHERE id=?");
 $query->bind_param("i", $id);

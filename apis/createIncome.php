@@ -1,12 +1,13 @@
 <?php
 
 include "connection.php";
+$data = json_decode(file_get_contents("php://input"), true);
 
-$id =$_POST["id"];
-$amount =$_POST["amount"];
-$note =$_POST["note"];
-$userId =$_POST["userId"];
-$date =$_POST["date"];
+$id =$data["id"];
+$amount =$data["amount"];
+$note =$data["note"];
+$userId =$data["userId"];
+$date =$data["date"];
 
 $query = $connection->prepare("INSERT INTO incomes VALUES (?,?,?,?,?)");
 $query->bind_param("iisis", $id, $amount, $note, $userId,$date);

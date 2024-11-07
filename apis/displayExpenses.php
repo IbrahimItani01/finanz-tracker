@@ -1,7 +1,8 @@
 <?php
 include "connection.php";
+$data = json_decode(file_get_contents("php://input"), true);
 
-$userId =$_POST["userId"];
+$userId =$data["userId"];
 
 $query = $connection->prepare("SELECT id,amount,note FROM expenses WHERE user_id=?");
 $query->bind_param("i", $userId);

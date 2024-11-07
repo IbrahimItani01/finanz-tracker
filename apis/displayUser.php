@@ -1,18 +1,16 @@
 <?php
 include "connection.php";
+$data = json_decode(file_get_contents("php://input"), true);
 
-$id =$_POST["id"];
+$id =$data["id"];
 
 $query = $connection->prepare("SELECT name,budget FROM users WHERE id=?");
 $query->bind_param("i", $id);
 $query->execute();
 $result = $query->get_result();
 if($result->num_rows > 0){
-    $array =[];
-    while($row = $result->fetch_assoc()){
-        $array[] = $row;
-    }
-    echo json_encode($array);
+    $row = $result->fetch_assoc();
+    echo json_encode($row);
 }else{
     $response=[
         "status"=> "error",
