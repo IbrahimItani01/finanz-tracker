@@ -45,8 +45,8 @@ submitButton?.addEventListener("click", () => {
     else {
         userData.username = userNameInput.value;
         userData.budget = budgetNumber;
-    localStorage.setItem("userData", JSON.stringify(userData));
-    window.location.href = "http://127.0.0.1:5500/pages/dashboard.html";
+        localStorage.setItem("userData", JSON.stringify(userData));
+        window.location.href = "http://127.0.0.1:5500/pages/dashboard.html";
   }
 });
 
