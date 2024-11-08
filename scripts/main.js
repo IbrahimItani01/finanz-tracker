@@ -2,7 +2,7 @@ const submitButton = document.getElementById("submit-button");
 const userNameContainer = document.getElementById("username-container");
 const burgerMenu = document.getElementById("mobile-menu");
 const burgerContent = document.getElementById("mobile-content");
-
+const passwordValue = document.getElementById("password");
 burgerMenu?.addEventListener("click", () => {
   burgerContent.classList.toggle("hidden");
 });
@@ -38,6 +38,7 @@ submitButton?.addEventListener("click", () => {
         {
           name: userNameInput.value,
           budget: budgetNumber,
+          password: passwordValue.value,
         },
         {
           headers: {
