@@ -1,16 +1,59 @@
+// Elements
 const expenseDiv = document.getElementById("entry-div");
-const editHint = document.getElementById("edit-hint");
-const sortCriteriaDropdown = document.getElementById("sortCriteria");
+const expenseEditHint = document.getElementById("edit-hint");
+const expenseSortCriteriaDropdown = document.getElementById("sortCriteria");
+const expenseForm = document.getElementById("expense-form");
+const expenseAmount = document.getElementById("expense-amount");
+const expenseNote = document.getElementById("expense-note");
+const userNameDisplay = document.getElementById("username-display");
 
-let editMode = false;
-let editKey = null;
+axios
+  .post("http://localhost/finanz-tracker-enhanced/apis/displayUser.php",
+    {
+      id: localStorage.getItem("currentUser"),
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
+  .then((response) => {
+    userNameDisplay.innerText = response.data.name;
+  })
+  .catch((err) => console.log(err));
 
+let expenseEditMode = false;
+let expenseEditKey = null;
+let expenseData = [];  // Store fetched expense data
+
+// Fetch and render data
+const fetchExpenseData = () => {
+  axios.post(
+    "http://localhost/finanz-tracker-enhanced/apis/displayExpenses.php",
+    {
+      userId: localStorage.getItem("currentUser"),
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
+  .then(response => {
+    expenseData = response.data;  // Store the fetched expense data
+    applyExpenseSort();  // Sort and render data after fetching
+  })
+  .catch(error => console.error("Error fetching expense data:", error));
+};
+
+// Render expense data
 const renderExpenseData = () => {
-  expenseDiv.innerHTML = "";
+  expenseDiv.innerHTML = "";  // Clear existing entries
 
-  userDataObject.expenses.forEach((expenseData) => {
+  expenseData.forEach((expenseData) => {
     expenseDiv.innerHTML += `
-      <div class="entry-card" key=${expenseData.id}>
+      <div class="entry-card" key="${expenseData.id}">
         <div class="information">
           <h2 class="amount">$${expenseData.amount}</h2>
           <p class="note">${expenseData.note}</p>
@@ -27,10 +70,11 @@ const renderExpenseData = () => {
     `;
   });
 
-  attachEventListeners();
+  attachExpenseEventListeners();  // Attach event listeners for edit and delete buttons
 };
 
-const attachEventListeners = () => {
+// Attach event listeners to buttons
+const attachExpenseEventListeners = () => {
   const deleteButtons = document.querySelectorAll(".delete");
   const editButtons = document.querySelectorAll(".edit");
 
@@ -38,11 +82,18 @@ const attachEventListeners = () => {
     button.addEventListener("click", function () {
       const expenseCard = this.closest(".entry-card");
       const keyToDelete = expenseCard.getAttribute("key");
-      expenseCard.remove();
-      userDataObject.expenses = userDataObject.expenses.filter(
-        (expense) => expense.id !== keyToDelete
-      );
-      saveToLocalStorage();
+
+      axios.post(
+        "http://localhost/finanz-tracker-enhanced/apis/deleteExpense.php",
+        { id: keyToDelete },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then(() => {
+        // Remove the deleted item from expenseData and re-render
+        expenseData = expenseData.filter(item => item.id !== keyToDelete);
+        renderExpenseData();
+      })
+      .catch(error => console.error("Error deleting expense data:", error));
     });
   });
 
@@ -50,60 +101,75 @@ const attachEventListeners = () => {
     button.addEventListener("click", function () {
       const expenseCard = this.closest(".entry-card");
       const keyToEdit = expenseCard.getAttribute("key");
-      const expense = userDataObject.expenses.find((item) => item.id === keyToEdit);
-      editKey = expense.id;
-      expenseAmount.value = expense.amount;
-      expenseNote.value = expense.note;
-      editMode = true;
-      editHint.classList.toggle("hidden");
+
+      axios.post(
+        "http://localhost/finanz-tracker-enhanced/apis/selectExpense.php",
+        { id: keyToEdit },
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        expenseEditKey = res.data.id;
+        expenseAmount.value = res.data.amount;
+        expenseNote.value = res.data.note;
+        expenseEditMode = true;
+        expenseEditHint.classList.remove("hidden");  // Show edit hint
+      })
+      .catch(error => console.error("Error fetching expense data for edit:", error));
     });
   });
 };
 
-const expenseForm = document.getElementById("expense-form");
-const expenseAmount = document.getElementById("expense-amount");
-const expenseNote = document.getElementById("expense-note");
-
-const addExpense = (amount, note) => {
-  const expenseData = {
-    id: Date.now().toString(),
-    amount: amount,
-    note: note,
-    date: new Date().toISOString(),
-  };
-  userDataObject.expenses.push(expenseData);
-  saveToLocalStorage();
-  renderExpenseData();  
+// Add new or update existing expense
+const addOrUpdateExpense = (amount, note) => {
+  if (!expenseEditMode) {
+    // Adding new expense
+    axios.post(
+      "http://localhost/finanz-tracker-enhanced/apis/createExpense.php",
+      {
+        amount,
+        note,
+        userId: localStorage.getItem("currentUser"),
+        date: new Date().toISOString(),
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+    .then(res => {
+      fetchExpenseData();  // Re-fetch and render after adding
+    })
+    .catch(error => console.error("Error adding expense data:", error));
+  } else {
+    // Updating existing expense
+    axios.post(
+      "http://localhost/finanz-tracker-enhanced/apis/editExpense.php",
+      { id: expenseEditKey, amount, note },
+      { headers: { "Content-Type": "application/json" } }
+    )
+    .then(() => {
+      expenseEditMode = false;
+      expenseEditKey = null;
+      expenseEditHint.classList.add("hidden");  // Hide edit hint
+      fetchExpenseData();  // Re-fetch and render after updating
+    })
+    .catch(error => console.error("Error updating expense data:", error));
+  }
 };
 
+// Handle form submission
 expenseForm.addEventListener("submit", (e) => {
+  e.preventDefault();
   const amount = expenseAmount.value;
   const note = expenseNote.value;
-
-  if (editMode === false) {
-    addExpense(amount, note);
-  } else {
-    userDataObject.expenses = userDataObject.expenses.map((expense) => {
-      if (expense.id === editKey) {
-        return {
-         ...expense,amount:amount,note:note
-        };
-      }
-      return expense;
-    });
-
-    editMode = false;
-    editKey = null;
-    editHint.classList.toggle("hidden");
-    renderExpenseData();  
-  }
-  saveToLocalStorage();
+  addOrUpdateExpense(amount, note);
+  expenseForm.reset();  // Clear form inputs after submission
 });
 
-const applySort = () => {
-  const criteria = sortCriteriaDropdown.value;
+// Sorting function
+const applyExpenseSort = () => {
+  const criteria = expenseSortCriteriaDropdown.value;
 
-  userDataObject.expenses.sort((a, b) => {
+  expenseData.sort((a, b) => {
     if (criteria === "amount") {
       return parseFloat(a.amount) - parseFloat(b.amount);
     } else if (criteria === "note") {
@@ -113,9 +179,11 @@ const applySort = () => {
     }
   });
 
-  renderExpenseData();  
+  renderExpenseData();  // Re-render after sorting
 };
 
-sortCriteriaDropdown.addEventListener("change", applySort);
+// Attach event listener to sort criteria dropdown
+expenseSortCriteriaDropdown.addEventListener("change", applyExpenseSort);
 
-renderExpenseData();  
+// Initial fetch and render
+fetchExpenseData();
