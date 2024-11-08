@@ -2,14 +2,12 @@
 
 
  include "connection.php";
-//  $data = json_decode(file_get_contents("php://input"), true);
+ $data = json_decode(file_get_contents("php://input"), true);
 
-//  $userName = $data["name"];
-//  $password = $data["password"];
-//  $budget = $data["budget"];
-$userName = $_POST["name"];
-$password = $_POST["password"];
-$budget = $_POST["budget"];
+ $userName = $data["name"];
+ $password = $data["password"];
+ $budget = $data["budget"];
+
 
 $hashed = password_hash($password,PASSWORD_DEFAULT);
 $checkUserExist = $connection->prepare("SELECT id,name,password from users where name=?");
