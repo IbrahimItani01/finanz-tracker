@@ -3,7 +3,7 @@ const editHint = document.getElementById("edit-hint");
 const sortCriteriaDropdown = document.getElementById("sortCriteria");
 
 let editMode = false;
-let editKey = null;
+let editKey ;
 
 
 
@@ -60,9 +60,6 @@ deleteButtons.forEach((button) => {
         },
       }
     );
-    // userDataObject.income = userDataObject.income.filter(
-    //   (income) => income.id !== keyToDelete
-    // );
   });
 });
 
@@ -70,15 +67,24 @@ editButtons.forEach((button) => {
   button.addEventListener("click", function () {
     const incomeCard = this.closest(".entry-card");
     const keyToEdit = incomeCard.getAttribute("key");
-
-    const income = userDataObject.income.find(
-      (item) => item.id === keyToEdit
-    );
-    editKey = income.id;
-    entryAmount.value = income.amount;
-    entryNote.value = income.note;
-    editMode = true;
-    editHint.classList.toggle("hidden");
+    axios.post(
+      "http://localhost/finanz-tracker-enhanced/apis/selectIncome.php",
+      {
+        id:keyToEdit,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res)=>{
+      editKey = res.data.id;
+      entryAmount.value = res.data.amount;
+      entryNote.value = res.data.note;
+      editMode = true;
+      editHint.classList.toggle("hidden");
+    })
+   
   });
 });
     })
@@ -113,43 +119,50 @@ const addIncome = (amount, note) => {
 entryForm.addEventListener("submit", (e) => {
   const amount = entryAmount.value;
   const note = entryNote.value;
-  e.preventDefault();
   if (editMode === false) {
     addIncome(amount, note);
   } else {
-    userDataObject.income = userDataObject.income.map((income) => {
-      if (income.id === editKey) {
-        return {
-          ...income,amount:amount,note:note
-        };
+    axios.post(
+      "http://localhost/finanz-tracker-enhanced/apis/editIncome.php",
+      {
+        id:editKey,
+        amount:amount,
+        note:note,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-      return income;
-    });
+    ).then((res)=>{
+      editMode = false;
+      editKey = null;
+      editHint.classList.toggle("hidden");
+      renderEntryData();
 
-    editMode = false;
-    editKey = null;
-    editHint.classList.toggle("hidden");
+    })
+
   }
 });
 
-// const applySort = () => {
-//   const criteria = sortCriteriaDropdown.value;
+const applySort = () => {
+  const criteria = sortCriteriaDropdown.value;
 
-//   userDataObject.income.sort((a, b) => {
-//     if (criteria === "amount") {
-//       return parseFloat(a.amount) - parseFloat(b.amount);
-//     } else if (criteria === "note") {
-//       return a.note.localeCompare(b.note);
-//     } else if (criteria === "date") {
-//       return new Date(b.date) - new Date(a.date);
-//     }
-//   });
+  userDataObject.income.sort((a, b) => {
+    if (criteria === "amount") {
+      return parseFloat(a.amount) - parseFloat(b.amount);
+    } else if (criteria === "note") {
+      return a.note.localeCompare(b.note);
+    } else if (criteria === "date") {
+      return new Date(b.date) - new Date(a.date);
+    }
+  });
 
-//   // renderEntryData();  // Re-render after sorting
-// };
+  // renderEntryData();  // Re-render after sorting
+};
 
-// // Attach event listener to sort criteria dropdown
-// sortCriteriaDropdown.addEventListener("change", applySort);
+// Attach event listener to sort criteria dropdown
+sortCriteriaDropdown.addEventListener("change", applySort);
 
 // // Initial render
 
