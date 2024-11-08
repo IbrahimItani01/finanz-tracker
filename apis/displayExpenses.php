@@ -13,11 +13,15 @@ if($result->num_rows > 0){
     while($row = $result->fetch_assoc()){
         $array[] = $row;
     }
-    echo json_encode($array);
+    $response=[
+        "array"=> $array,
+    ];
+    echo json_encode($response);
 }else{
     $response=[
         "status"=> "error",
         "message"=> "empty result",
+        "array"=> [],
     ];
     echo json_encode($response);
 }

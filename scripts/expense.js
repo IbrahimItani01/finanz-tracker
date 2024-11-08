@@ -41,7 +41,7 @@ const fetchExpenseData = () => {
     }
   )
   .then(response => {
-    expenseData = response.data;  // Store the fetched expense data
+    expenseData = response.data.array;  // Store the fetched expense data
     applyExpenseSort();  // Sort and render data after fetching
   })
   .catch(error => console.error("Error fetching expense data:", error));

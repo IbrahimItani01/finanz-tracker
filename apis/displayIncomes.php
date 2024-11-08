@@ -3,6 +3,7 @@ include "connection.php";
 $data = json_decode(file_get_contents("php://input"), true);
 
 $userId =$data["userId"];
+// $userId =$_POST["id"];
 
 $query = $connection->prepare("SELECT id,amount,note FROM incomes WHERE user_id=?");
 $query->bind_param("i", $userId);
@@ -13,11 +14,15 @@ if($result->num_rows > 0){
     while($row = $result->fetch_assoc()){
         $array[] = $row;
     }
-    echo json_encode($array);
+    $response=[
+        "array"=> $array,
+    ];
+    echo json_encode($response);
 }else{
     $response=[
         "status"=> "error",
         "message"=> "empty result",
+        "array"=> [],
     ];
     echo json_encode($response);
 }

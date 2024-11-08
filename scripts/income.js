@@ -19,6 +19,7 @@ axios
   )
   .then((response) => {
     userNameDisplay.innerText = response.data.name;
+    console.log(response.data)
   })
   .catch((err) => console.log(err));
 let editMode = false;
@@ -39,7 +40,8 @@ const fetchIncomeData = () => {
     }
   )
   .then(response => {
-    incomeData = response.data;  // Store the fetched income data
+    incomeData = response.data.array; 
+    console.log(incomeData) // Store the fetched income data
     applySort();  // Sort and render data after fetching
   })
   .catch(error => console.error("Error fetching income data:", error));
