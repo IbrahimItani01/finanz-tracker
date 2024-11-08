@@ -41,6 +41,9 @@ axios
     remainingBudget.innerText =
       parseInt(budgetDisplay.innerText) -
       parseInt(totalExpensesDisplay.innerText);
+    if(parseInt(remainingBudget.innerText)<=0){
+      budgetWarning.classList.toggle("hidden")
+    }
   })
   .catch((err) => console.log(err));
   axios
@@ -62,4 +65,23 @@ axios
   })
   .catch((err) => console.log(err));
 
-  
+  resetButton?.addEventListener("click",()=>{
+    axios
+  .post(
+    "http://localhost/finanz-tracker-enhanced/apis/deleteUser.php",
+    {
+      id: localStorage.getItem("currentUser"),
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
+  .then((response) => {
+    window.location.href = "http://127.0.0.1:5500";
+
+  })
+  .catch((err) => console.log(err));
+
+  })
