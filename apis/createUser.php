@@ -20,6 +20,7 @@ if ($result->num_rows> 0) {
     // echo gettype($hashed) ;
     if(password_verify($password,$row['password'])){
         $response = [
+            "status"=>"success",
             "message"=>"User found and authenticated",
             "userName"=> $row["name"],
             "userId"=>$row["id"],
@@ -27,6 +28,7 @@ if ($result->num_rows> 0) {
         echo json_encode($response);
     }else{
         $response = [
+            "status"=>"failed",
             "message"=>"User found but failed to authenticate"
         ];
         echo json_encode($response);
@@ -44,7 +46,11 @@ else{
             "userId"=> $userId,        ];
         echo json_encode( $response );
     }else{
-        echo "Failed adding user";
+        $response = [
+            "status"=>"failed",
+            "message"=>"failed to add user"
+        ];
+        echo json_encode($response);
     }
     exit; // Ensures no other output is sent
 }
